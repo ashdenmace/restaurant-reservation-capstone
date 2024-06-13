@@ -94,6 +94,18 @@ function validatePeople(req, res, next) {
   next();
 }
 
+function notTuesday(req, res, next) {
+  const date = req.body.data.reservation_date;
+  const day = new Date(date).getUTCDay();
+  console.log(day)
+  if (day !== 2) {
+    next();
+    
+  }
+  next({status: 400, messsage: "We are closed on tuesdays"})
+  
+}
+
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
@@ -105,6 +117,7 @@ module.exports = {
     validateReservationTime,
     validatePeople,
     hasValidProperties,
+    notTuesday,
     asyncErrorBoundary(create),
   ],
 };
