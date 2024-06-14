@@ -98,12 +98,25 @@ function notTuesday(req, res, next) {
   const date = req.body.data.reservation_date;
   const day = new Date(date).getUTCDay();
   console.log(day)
-  if (day !== 2) {
-    next();
-    
+ 
+  if (day === 2) {
+    return next({ status: 400, message: "We are closed on Tuesdays" });
   }
-  next({status: 400, messsage: "We are closed on tuesdays"})
+
+  // If it's not Tuesday, continue to the next middleware
+  next();
   
+}
+
+function notBeforeToday(req, res, next) {
+  const reservationDate = new Date(req.body.data.reservation_date);
+  const currentDate = new Date()
+
+  if(reservationDate < currentDate) {
+    next({status: 400, message: `Reservation must be in the future`})
+  } 
+
+  next()
 }
 
 
@@ -113,11 +126,12 @@ module.exports = {
     bodyDataHas("first_name"),
     bodyDataHas("last_name"),
     bodyDataHas("mobile_number"),
+    notTuesday,
+    notBeforeToday,
     validateReservationDate,
     validateReservationTime,
     validatePeople,
     hasValidProperties,
-    notTuesday,
     asyncErrorBoundary(create),
   ],
 };
