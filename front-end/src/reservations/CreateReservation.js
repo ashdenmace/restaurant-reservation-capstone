@@ -3,6 +3,7 @@ import {useHistory} from "react-router-dom"
 import ReservationForm from "../reservations/ReservationForm"
 import {createReservation} from "../utils/api"
 import ErrorAlert from "../layout/ErrorAlert"
+import validateReservation from "./ValidateReservation"
 
 function CreateReservation() {
     const history = useHistory();
@@ -19,6 +20,8 @@ function CreateReservation() {
     const [errors, setErrors] = useState(null);
     const abortController = new AbortController();
 
+    const newErrors = []
+    
     useEffect(() => {
         return () => {
             abortController.abort();
@@ -30,22 +33,26 @@ function CreateReservation() {
         setReservation((prevReservation) => {
             const updatedValue = name === "people" ? Number(value) : value;
             const updatedReservation = { ...prevReservation, [name]: updatedValue };
-            console.log(updatedReservation);
             return updatedReservation;
         });
     }
     
-    
-
     async function submitHandler(event) {
         event.preventDefault();
+
+        const validationErrors = validateReservation(reservation);
+       
+        if (validationErrors.length) {
+            setErrors(validationErrors)
+        }
+
         try{
             console.log(reservation)
             const response = await createReservation(reservation, abortController.signal)
             history.push(`/dashboard?date=${reservation.reservation_date}`);
             setReservation(blankState)
         } catch (error) {
-            setErrors(error)
+            console.log(error)
         }
         
     }

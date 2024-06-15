@@ -103,7 +103,7 @@ function notTuesday(req, res, next) {
     return next({ status: 400, message: "We are closed on Tuesdays" });
   }
 
-  // If it's not Tuesday, continue to the next middleware
+  
   next();
   
 }
@@ -115,6 +115,8 @@ function notBeforeToday(req, res, next) {
   if(reservationDate < currentDate) {
     next({status: 400, message: `Reservation must be in the future`})
   } 
+
+  
 
   next()
 }
