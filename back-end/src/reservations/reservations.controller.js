@@ -17,7 +17,6 @@ const validProperties = [
 
 function bodyDataHas(property) {
   return function (req, res, next) {
-    console.log(req.body.data)
     const {data = {}} = req.body;
     if (data[property]) {
       return next();
@@ -97,7 +96,6 @@ function validatePeople(req, res, next) {
 function notTuesday(req, res, next) {
   const date = req.body.data.reservation_date;
   const day = new Date(date).getUTCDay();
-  console.log(day)
  
   if (day === 2) {
     return next({ status: 400, message: "We are closed on Tuesdays" });
@@ -108,18 +106,33 @@ function notTuesday(req, res, next) {
   
 }
 
-function notBeforeToday(req, res, next) {
-  const reservationDate = new Date(req.body.data.reservation_date);
-  const currentDate = new Date()
+function notInThePast(req, res, next) {
+  const data = req.body.data
+  const reservationDateTime = new Date(`${data.reservation_date}T${data.reservation_time}`);
+  const currentDateTime = new Date();
 
-  if(reservationDate < currentDate) {
+  if (reservationDateTime < currentDateTime) {
     next({status: 400, message: `Reservation must be in the future`})
-  } 
-
-  
-
+  }
   next()
 }
+
+function validTime(req, res, next) {
+  const reservationTime = req.body.data.reservation_time
+  const hours = Number(reservationTime.split(":")[0]);
+  const minutes = Number(reservationTime.split(":")[1]);
+  
+  if (hours < 10 || (hours === 10 && minutes <= 30)) {
+    next({status: 400, message: `Reservation must be made after 10:30AM`})
+  }
+  
+  if (hours > 21 || (hours === 21 && minutes >= 30)) {
+    next({status: 400, message: `Reservation must be made before 9:30PM`})
+  }
+
+  next();
+}
+
 
 
 module.exports = {
@@ -129,7 +142,8 @@ module.exports = {
     bodyDataHas("last_name"),
     bodyDataHas("mobile_number"),
     notTuesday,
-    notBeforeToday,
+    validTime,
+    notInThePast,
     validateReservationDate,
     validateReservationTime,
     validatePeople,
