@@ -1,4 +1,4 @@
-import react, {useState, useEffect} from "react"
+import {useState, useEffect} from "react"
 import {useHistory} from "react-router-dom"
 import ReservationForm from "../reservations/ReservationForm"
 import {createReservation} from "../utils/api"
@@ -18,11 +18,10 @@ function CreateReservation() {
 
     const [reservation, setReservation] = useState(blankState);
     const [errors, setErrors] = useState(null);
-    const abortController = new AbortController();
-
-    const newErrors = []
+   
     
     useEffect(() => {
+        const abortController = new AbortController();
         return () => {
             abortController.abort();
         };
@@ -39,22 +38,22 @@ function CreateReservation() {
     
     async function submitHandler(event) {
         event.preventDefault();
+        const abortController = new AbortController();
 
         const validationErrors = validateReservation(reservation);
        
         if (validationErrors.length) {
             setErrors(validationErrors)
+        } else {
+            try{
+                console.log(reservation)
+                await createReservation(reservation, abortController.signal)
+                history.push(`/dashboard?date=${reservation.reservation_date}`);
+                setReservation(blankState)
+            } catch (error) {
+                console.log(error)
+            }
         }
-
-        try{
-            console.log(reservation)
-            const response = await createReservation(reservation, abortController.signal)
-            history.push(`/dashboard?date=${reservation.reservation_date}`);
-            setReservation(blankState)
-        } catch (error) {
-            console.log(error)
-        }
-        
     }
 
 
