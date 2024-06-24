@@ -98,14 +98,24 @@ async function create(req, res, next) {
     res.status(201).json({ data })
 }
 
-
+function isNotSeated(req, res, next) {
+    const {status} = res.locals.reservation
+    if (status === "seated") {
+        return next({status: 400, message: `table is already seated`})
+    }
+    next();
+}
 
 async function update(req, res, next) {
     const updatedTable = {
         ...req.body.data,
         table_id: res.locals.table.table_id
     }
-    const data = await service.update(updatedTable);
+    const updatedReservation = {
+        ...res.locals.reservation,
+        status: "seated",
+    }
+    const data = await service.update(updatedTable, updatedReservation);
     res.status(200).json({data})
 }
 
@@ -118,8 +128,7 @@ function mustBeOccupied (req, res, next) {
 }
 
 async function finish(req, res, next) {
-   console.log(req.params.table_id) 
-   await service.finishReservation(req.params.table_id);
+   await service.finishReservation(req.params.table_id, res.locals.reservation.reservation_id);
    res.sendStatus(200);
    
 }
@@ -127,6 +136,6 @@ async function finish(req, res, next) {
 module.exports = {
     list,
     create: [bodyDataHas("table_name"), bodyDataHas("capacity"), validateCapacity, validateTableName, asyncErrorBoundary(create)],
-    update: [bodyDataHas("reservation_id"), asyncErrorBoundary(reservationExists), asyncErrorBoundary(tableExists), isTableOccupied, sufficientCapacity, update ],
-    finish: [asyncErrorBoundary(tableExists), mustBeOccupied, finish ]
+    update: [bodyDataHas("reservation_id"), asyncErrorBoundary(reservationExists), asyncErrorBoundary(tableExists), isNotSeated, isTableOccupied, sufficientCapacity, update ],
+    finish: [asyncErrorBoundary(tableExists), asyncErrorBoundary(reservationExists), mustBeOccupied, asyncErrorBoundary(finish) ]
 }

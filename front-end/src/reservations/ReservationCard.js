@@ -15,6 +15,7 @@ function ReservationCard ({reservation}) {
                                 <li className="list-group-item"> Mobile Number: {reservation.mobile_number} </li>
                                 <li className="list-group-item">Party Size: {reservation.people}</li>
                                 <li className="list-group-item">Reservation ID: {reservation.reservation_id}</li>
+                                <li className="list-group-item">Status: {reservation.status}</li>
                             </ul>
                     </div>
                 </div>

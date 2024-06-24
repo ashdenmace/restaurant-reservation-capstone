@@ -13,6 +13,7 @@ const validProperties = [
   "reservation_date",
   "reservation_time",
   "people",
+  "status"
 ]
 
 function bodyDataHas(property) {
@@ -152,7 +153,42 @@ function validTime(req, res, next) {
   next();
 }
 
+function statusIsBooked(req, res, next) {
+  const reservation = req.body.data
+  if (reservation.status !== "booked") {
+    return next({status: 400, message: "status cannot be finished or seated"})
+  }
+  next();
+}
 
+
+function validateStatus(req, res, next) {
+  const validStatuses = ["booked", "seated", "finished"]
+  const {status} = req.body.data;
+
+  if (validStatuses.includes(status)) {
+    return next();
+  }
+
+  next({status: 400, message: `${status} is not valid`})
+   
+}
+
+function notFinishedStatus(req, res, next) {
+  const {status} = res.locals.reservation;
+
+  if (status === "finished") {
+    return next({status: 400, message: "reservation cannot be finished"});
+  }
+  next();
+}
+
+async function updateStatus(req, res, next) {
+  const {status} = req.body.data;
+  const {reservation_id} = res.locals.reservation;
+  const data = await service.updateStatus(status, reservation_id);
+  res.json({data})
+}
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
@@ -168,6 +204,9 @@ module.exports = {
     validateReservationTime,
     validatePeople,
     hasValidProperties,
+    statusIsBooked,
     asyncErrorBoundary(create),
   ],
+
+  updateStatus: [asyncErrorBoundary(doesReservationExist), notFinishedStatus, validateStatus, asyncErrorBoundary(updateStatus)],
 };
