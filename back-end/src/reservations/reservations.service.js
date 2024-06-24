@@ -12,8 +12,13 @@ function create(reservation) {
     return knex("reservations").insert(reservation).returning("*").then(createdReservation => createdReservation[0]);
 }
 
+function read(reservationId) {
+    return knex("reservations").select("*").where({"reservation_id": reservationId}).first();
+}
+
 module.exports = {
     list, 
     listByDate,
-    create
+    create,
+    read,
 }

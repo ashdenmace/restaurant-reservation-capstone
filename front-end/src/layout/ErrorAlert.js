@@ -11,7 +11,7 @@ import React from "react";
 function ErrorAlert({ error }) {
   if (!error) return null;
 
-  const errors = Array.isArray(error) ? error : [error];
+  const errors = Array.isArray(error) ? error : [error.message];
 
   return (
     <div className="alert alert-danger m-2">

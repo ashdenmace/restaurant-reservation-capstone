@@ -46,7 +46,6 @@ function CreateReservation() {
             setErrors(validationErrors)
         } else {
             try{
-                console.log(reservation)
                 await createReservation(reservation, abortController.signal)
                 history.push(`/dashboard?date=${reservation.reservation_date}`);
                 setReservation(blankState)

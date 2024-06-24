@@ -46,6 +46,25 @@ async function list(req, res) {
   }
 }
 
+async function doesReservationExist(req, res, next) {
+  const reservationId = req.params.reservation_id;
+  try {
+    const data = await service.read(reservationId);
+    if (data) {
+      res.locals.reservation = data;
+      return next();
+    }
+    return next({ status: 404, message: `reservation id ${reservationId} does not exist` });
+  } catch (error) {
+    return next(error);
+  }
+}
+
+// read Route Handler
+async function read(req, res, next) {
+  const data = res.locals.reservation;
+  res.json({ data });
+}
 
 async function create(req, res, next) {
   const newReservation = await service.create(req.body.data);
@@ -137,6 +156,7 @@ function validTime(req, res, next) {
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
+  read: [asyncErrorBoundary(doesReservationExist), read],
   create: [
     bodyDataHas("first_name"),
     bodyDataHas("last_name"),
