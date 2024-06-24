@@ -51,8 +51,6 @@ function sufficientCapacity(req, res, next) {
 
 function isTableOccupied(req, res, next) {
     const table = res.locals.table;
-    console.log("table:", table.reservation_id)
-    console.log("condition", table.reservation_id !== null)
     if (table.reservation_id === null) {
         return next()
     }
@@ -67,7 +65,7 @@ async function tableExists(req, res, next) {
         res.locals.table = table
         return next();
     }
-    next({status: 404, message: "table does not exist"})
+    next({status: 404, message: "table does not exist 99"})
 }
 
 async function reservationExists(req, res, next) {
@@ -111,8 +109,24 @@ async function update(req, res, next) {
     res.status(200).json({data})
 }
 
+function mustBeOccupied (req, res, next) {
+    const table = res.locals.table;
+    if (table.reservation_id){
+        return next()
+    }
+    next({status: 400, message: "table is not occupied"})
+}
+
+async function finish(req, res, next) {
+   console.log(req.params.table_id) 
+   await service.finishReservation(req.params.table_id);
+   res.sendStatus(200);
+   
+}
+
 module.exports = {
     list,
     create: [bodyDataHas("table_name"), bodyDataHas("capacity"), validateCapacity, validateTableName, asyncErrorBoundary(create)],
-    update: [bodyDataHas("reservation_id"), asyncErrorBoundary(reservationExists), asyncErrorBoundary(tableExists), isTableOccupied, sufficientCapacity, update ]
+    update: [bodyDataHas("reservation_id"), asyncErrorBoundary(reservationExists), asyncErrorBoundary(tableExists), isTableOccupied, sufficientCapacity, update ],
+    finish: [asyncErrorBoundary(tableExists), mustBeOccupied, finish ]
 }

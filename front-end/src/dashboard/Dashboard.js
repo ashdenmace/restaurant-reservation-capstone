@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { listReservations, listTables } from "../utils/api";
+import { listReservations, listTables, finishTable } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory } from "react-router-dom";
 import useQuery from "../utils/useQuery";
@@ -54,6 +54,20 @@ function Dashboard({ date }) {
     history.push(`/dashboard?date=${next(queryDate)}`);
   }
 
+  async function finishHandler(table_id) {
+    const abortController = new AbortController();
+    const result = window.confirm(
+      "Is this table ready to seat new guests? This cannot be undone."
+    );
+
+    if (result) {
+      await finishTable(table_id, abortController.signal);
+      loadDashboard(queryDate);
+    }
+
+    return () => abortController.abort();
+  }
+
   return (
     <main>
       <h1>Dashboard</h1>
@@ -82,10 +96,10 @@ function Dashboard({ date }) {
         <div className="col">
           <h3>Tables</h3>
           <ErrorAlert error={tablesError} />
-      
+         
             {
               tables.length ? (tables.map((table) => (
-                <TableCard key={table.table_id} table={table} />  
+                <TableCard key={table.table_id} table={table}  finishHandler={() => finishHandler(table.table_id)}/>  
               ))) : (
                 <h1>No Tables for {queryDate}</h1>
               )

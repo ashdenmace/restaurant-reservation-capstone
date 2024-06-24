@@ -1,10 +1,11 @@
-function TablesCard({table}) {
+function TablesCard({table, finishHandler}) {
    
     return (
         <>
             <div className="card my-2">
-                <div className="card-header d-flex justify-content align-items-center">
+                <div className="card-header d-flex justify-content-between align-items-center">
                     <h3>{table.table_name}</h3>
+                    {table.reservation_id ? <button className="btn btn-warning" data-table-id-finish={table.table_id} onClick={finishHandler}>Finish</button> : null}
                 </div>
                     <ul className="list-group">
                         <li className="list-group-item">Capacity: {table.capacity}</li>
