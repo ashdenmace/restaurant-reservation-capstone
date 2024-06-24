@@ -53,10 +53,10 @@ function SeatReservation() {
 
     return (
         <>
-            <h1>Seating for reservations</h1>
+            <h2>Seating for reservation {reservation.reservation_id} for party of {reservation.people}</h2>
             <ErrorAlert error={error} />
             <form onSubmit={submitHandler}>
-                <select name="table_id" onChange={changeHandler} value={selectedTableId}>
+                <select className="form-select" name="table_id" onChange={changeHandler} value={selectedTableId}>
                     <option value="">- Please choose a table -</option>
                     {tables.map((table) => (
                         <option value={table.table_id} key={table.table_id}>
