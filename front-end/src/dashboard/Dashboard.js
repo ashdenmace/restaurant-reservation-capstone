@@ -6,6 +6,7 @@ import useQuery from "../utils/useQuery";
 import ReservationCard from "../reservations/ReservationCard";
 import { today, previous, next } from "../utils/date-time";
 import TableCard from "../tables/TablesCard";
+import ReservationsList from "../reservations/ReservationList"
 
 
 /**
@@ -85,13 +86,12 @@ function Dashboard({ date }) {
         <div className="col">
           <h3>Reservations</h3>
           <ErrorAlert error={reservationsError} />
-            {reservations.length ? (
-          reservations.map((reservation) => (
-            <ReservationCard key={reservation.reservation_id} reservation={reservation} />
-          ))
-        ) : (
-          <h1>No reservations for {queryDate}</h1>
-        )}
+          {reservations.length ? 
+            <ReservationsList reservations={reservations} />
+          : (
+            <h1>No reservations for {queryDate}</h1>
+            )}
+          
         </div>
         <div className="col">
           <h3>Tables</h3>
