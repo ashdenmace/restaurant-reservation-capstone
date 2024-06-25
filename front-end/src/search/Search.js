@@ -50,8 +50,8 @@ function Search() {
                 </form>
             </div>
         
-            {reservations.length ? <ReservationList reservations={reservations}/> : null}
-            {clicked ? <h4>No reservations found</h4> : null}
+            {clicked && (reservations.length ? <ReservationList reservations={reservations} /> : <h4>No reservations found</h4>)}
+            
             
 
         </>
