@@ -123,6 +123,17 @@ export async function finishTable(table_id, signal) {
   const options = {
     method: "DELETE",
     signal,
-  }
+  } 
   return await fetch(url, options)
+}
+
+export async function updateReservationStatus(reservation_id, status, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}/status`;
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data: { status } }),
+    signal,
+  };
+  return await fetchJson(url, options, {});
 }

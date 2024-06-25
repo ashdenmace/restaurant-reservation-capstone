@@ -155,7 +155,8 @@ function validTime(req, res, next) {
 
 function statusIsBooked(req, res, next) {
   const reservation = req.body.data
-  if (reservation.status !== "booked") {
+  console.log(reservation)
+  if ((reservation.status) && reservation.status !== "booked") {
     return next({status: 400, message: "status cannot be finished or seated"})
   }
   next();

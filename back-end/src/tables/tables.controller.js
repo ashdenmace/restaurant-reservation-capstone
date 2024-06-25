@@ -128,7 +128,8 @@ function mustBeOccupied (req, res, next) {
 }
 
 async function finish(req, res, next) {
-   await service.finishReservation(req.params.table_id, res.locals.reservation.reservation_id);
+   const table = res.locals.table
+   await service.finishReservation(req.params.table_id, table.reservation_id);
    res.sendStatus(200);
    
 }
@@ -137,5 +138,5 @@ module.exports = {
     list,
     create: [bodyDataHas("table_name"), bodyDataHas("capacity"), validateCapacity, validateTableName, asyncErrorBoundary(create)],
     update: [bodyDataHas("reservation_id"), asyncErrorBoundary(reservationExists), asyncErrorBoundary(tableExists), isNotSeated, isTableOccupied, sufficientCapacity, update ],
-    finish: [asyncErrorBoundary(tableExists), asyncErrorBoundary(reservationExists), mustBeOccupied, asyncErrorBoundary(finish) ]
+    finish: [asyncErrorBoundary(tableExists), mustBeOccupied, asyncErrorBoundary(finish) ]
 }
