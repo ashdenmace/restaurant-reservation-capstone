@@ -1,4 +1,5 @@
 import React from "react"
+import {Link} from "react-router-dom"
 
 function ReservationCard ({reservation}) {
     return (
@@ -15,8 +16,12 @@ function ReservationCard ({reservation}) {
                                 <li className="list-group-item"> Mobile Number: {reservation.mobile_number} </li>
                                 <li className="list-group-item">Party Size: {reservation.people}</li>
                                 <li className="list-group-item">Reservation ID: {reservation.reservation_id}</li>
-                                <li className="list-group-item"> {reservation.status === "seated" ? null :
-                            <a className="btn btn-primary" href={`/reservations/${reservation.reservation_id}/seat`}>Seat</a>}</li>
+                                <div className="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href={`/reservations/${reservation.reservation_id}/edit`} className="btn btn-secondary">Edit</a>
+                                        {reservation.status === "seated" ? null :
+                                    <a className="btn btn-primary" href={`/reservations/${reservation.reservation_id}/seat`}>Seat</a>}
+                                    
+                                </div>
                             </ul>
                     </div>
                 </div>

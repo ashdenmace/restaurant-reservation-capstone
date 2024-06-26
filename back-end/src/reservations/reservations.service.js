@@ -20,6 +20,10 @@ function updateStatus(status, reservation_id) {
     return knex("reservations").select("*").where({"reservation_id": reservation_id}).returning("*").update({status: status}, "*").then(updatedRecords => updatedRecords[0])
 }
 
+function update(updatedReservation) {
+    return knex("reservations").select("*").where({"reservation_id": updatedReservation.reservation_id}).returning("*").update(updatedReservation, "*").then(updatedRecords => updatedRecords[0])
+}
+
 function search(mobile_number) {
     console.log(typeof mobile_number)
     return knex("reservations")
@@ -38,4 +42,5 @@ module.exports = {
     read,
     updateStatus,
     search,
+    update,
 }

@@ -105,6 +105,8 @@ export async function createTable(table, signal) {
 export async function readReservation(reservation_id, signal) {
   const url = `${API_BASE_URL}/reservations/${reservation_id}`
   return await fetchJson(url, {signal}, [])
+    .then(formatReservationDate)
+    .then(formatReservationTime);
 }
 
 export async function updateTable(table_id, reservation_id, signal) {

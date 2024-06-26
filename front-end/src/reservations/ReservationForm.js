@@ -35,7 +35,7 @@ function ReservationForm({submitHandler, reservation, changeHandler}){
                 
                 <div className="form-group">
                     <label className="form-label">Party Size</label>
-                    <input className="form-control" id="people" name="people" value={reservation.people} onChange={changeHandler}></input>
+                    <input className="form-control" id="people" name="people" type="number" value={reservation.people} onChange={changeHandler}></input>
                 </div>
                 
                 <button type="submit" className="btn btn-primary">Submit</button>

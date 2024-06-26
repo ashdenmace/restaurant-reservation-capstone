@@ -167,7 +167,7 @@ function statusIsBooked(req, res, next) {
 
 
 function validateStatus(req, res, next) {
-  const validStatuses = ["booked", "seated", "finished"]
+  const validStatuses = ["booked", "seated", "finished", "cancelled"]
   const {status} = req.body.data;
 
   if (validStatuses.includes(status)) {
@@ -194,6 +194,15 @@ async function updateStatus(req, res, next) {
   res.json({data})
 }
 
+async function update(req, res, next) {
+  const {reservation_id} = res.locals.reservation;
+  const updatedReservation = {...req.body.data, reservation_id}
+  console.log(updatedReservation)
+  
+  const data = await service.update(updatedReservation)
+  res.status(200).json({data})
+}
+
 module.exports = {
   list: [asyncErrorBoundary(list)],
   read: [asyncErrorBoundary(doesReservationExist), read],
@@ -213,4 +222,14 @@ module.exports = {
   ],
 
   updateStatus: [asyncErrorBoundary(doesReservationExist), notFinishedStatus, validateStatus, asyncErrorBoundary(updateStatus)],
+  update: [asyncErrorBoundary(doesReservationExist), bodyDataHas("first_name"),
+  bodyDataHas("last_name"),
+  bodyDataHas("mobile_number"),
+  notTuesday,
+  validateReservationDate,
+  validateReservationTime,
+  validTime,
+  notInThePast,
+  validatePeople,
+  asyncErrorBoundary(update)]
 };
