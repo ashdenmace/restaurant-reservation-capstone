@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react"
+import {useState} from "react"
 import ErrorAlert from "../layout/ErrorAlert"
 import ReservationList from "../reservations/ReservationList"
 import {listReservations} from "../utils/api"
@@ -31,7 +31,7 @@ function Search() {
     return (
         <>
             <div>
-                <h2 className="search search-title">Search by Mobile Number</h2>
+                <h1 className="my-4 search search-title formH">Search by Mobile Number</h1>
                 <ErrorAlert error={errors}/>
             </div>
             <div>
@@ -46,7 +46,7 @@ function Search() {
                             placeholder="Enter a customer's phone number"
                         ></input>
                     </div>
-                    <button type="submit" className="btn btn-secondary">Find</button>
+                    <button type="submit" className="btn find-btn">Find</button>
                 </form>
             </div>
         

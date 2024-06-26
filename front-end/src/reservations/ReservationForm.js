@@ -38,8 +38,9 @@ function ReservationForm({submitHandler, reservation, changeHandler}){
                     <input className="form-control" id="people" name="people" type="number" value={reservation.people} onChange={changeHandler}></input>
                 </div>
                 
-                <button type="submit" className="btn btn-primary">Submit</button>
                 <button className="btn btn-danger" onClick={() => history.goBack()}>Cancel</button>
+                <button type="submit" className="btn btn-primary mx-2">Submit</button>
+                
             </form>
         </div>
         

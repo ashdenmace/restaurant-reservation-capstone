@@ -58,7 +58,7 @@ function CreateReservation() {
 
     return (
         <>
-            <h1>Create a Reservation</h1>
+            <h1 className="formH my-4">Create a Reservation</h1>
             <ErrorAlert error={errors}/>
             <ReservationForm reservation={reservation} changeHandler={changeHandler} submitHandler={submitHandler}/>
         </>

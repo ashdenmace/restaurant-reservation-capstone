@@ -1,0 +1,30 @@
+/* main {
+    background-color: green
+} */
+
+.card{
+    background-color: #610202
+}
+
+main {
+    font-family: "futura"
+}
+
+/* form {
+    border: 10px solid #610202;
+    padding: 20px 
+  } */
+
+form {
+    font-family: "futura";
+}
+
+.formH {
+    font-family: "futura";
+}
+
+.find-btn {
+    background-color: #9c0606;
+    color: white;
+}
+

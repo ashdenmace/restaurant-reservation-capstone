@@ -3,10 +3,10 @@ import { listReservations, listTables, finishTable } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory } from "react-router-dom";
 import useQuery from "../utils/useQuery";
-import ReservationCard from "../reservations/ReservationCard";
 import { today, previous, next } from "../utils/date-time";
 import TableCard from "../tables/TablesCard";
 import ReservationsList from "../reservations/ReservationList"
+import "./Dashboard.css"
 
 
 /**
@@ -75,20 +75,21 @@ function Dashboard({ date }) {
 
   return (
     <main>
-      <h1>Dashboard</h1>
-      <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for {queryDate}</h4>
+      <div className="dashboard-header my-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <h1>Dashboard</h1>
+        <div className="btn-group mx-4 mt-3 mt-md-0">
+          <button className="btn mb-3 mb-md-0 mr-md-2" onClick={previousHandler}>Previous</button>
+          <button className="btn mb-3 mb-md-0 mr-md-2" onClick={todayHandler}>Today</button>
+          <button className="btn mb-3 mb-md-0" onClick={nextHandler}>Next</button>
+        </div>
       </div>
-      
-      <div>
-        <button onClick={previousHandler}>Previous</button>
-        <button onClick={todayHandler}>Today</button>
-        <button onClick={nextHandler}>Next</button>
-      </div>
+     
 
       <div className="row">
         <div className="col">
-          <h3>Reservations</h3>
+          <div className="d-md-flex mb-3">
+            <h3 className="mb-0">Reservations for {queryDate}</h3>
+          </div>
           <ErrorAlert error={reservationsError} />
           {reservations.length ? 
             <ReservationsList reservations={reservations} refreshReservations={refreshReservations} />

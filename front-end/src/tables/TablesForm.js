@@ -60,7 +60,7 @@ function TablesForm() {
     
     return (
         <div>
-            <h1>Create a table</h1>
+            <h1 className="my-4 formH">Create a table</h1>
             <ErrorAlert error={errors} />
             <form onSubmit={submitHandler} >
                 <div className="form-group">
@@ -72,9 +72,11 @@ function TablesForm() {
                     <label className="form-label">Capacity</label>
                     <input className="form-control" id="capacity" name="capacity" value={table.capacity} onChange={changeHandler}></input>
                 </div>
+                <div>
+                    <button className="btn btn-danger" onClick={() => history.goBack()}>Cancel</button>
+                    <button type="submit" className="btn btn-primary">Submit</button>
+                </div> 
             
-            <button type="submit" className="btn btn-primary">Submit</button>
-            <button className="btn btn-danger" onClick={() => history.goBack()}>Cancel</button>
         </form>
     </div>
     )

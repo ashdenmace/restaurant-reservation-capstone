@@ -53,7 +53,7 @@ function EditReservation () {
 
     return (
         <>  
-            <h4>Edit reservation #{reservation_id}</h4>
+            <h4 className="my-4 formH">Edit reservation #{reservation_id}</h4>
             <ErrorAlert error= {error}/>
             <ReservationForm reservation={reservation} changeHandler={changeHandler} submitHandler={submitHandler}/>
         </>
