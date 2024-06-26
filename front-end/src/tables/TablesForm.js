@@ -31,7 +31,6 @@ function TablesForm() {
         if (isNaN(table.capacity)) {
             errors.push("Capacity must be a number")
         }
-        // setTable({...table, ["capacity"]: Number(`${table.capacity}`)})
         return errors
     }
 
@@ -47,7 +46,7 @@ function TablesForm() {
                 history.push("/dashboard")
                 //setTable(blankForm)
             }catch (error) {
-                console.log(error)
+                setErrors(error)
             }
             
         }

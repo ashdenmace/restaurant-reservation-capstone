@@ -4,7 +4,6 @@ import { updateReservationStatus } from "../utils/api";
 import { formatAsTime } from "../utils/date-time";
 
 function ReservationCard ({reservation, refreshReservations}) {
-    console.log(formatAsTime(reservation.reservation_time))
     function cancelResHandler (event) {
         event.preventDefault();
         const confirm = window.confirm("Do you want to cancel this reservation? This cannot be undone.")

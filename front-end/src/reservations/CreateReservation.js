@@ -50,7 +50,7 @@ function CreateReservation() {
                 history.push(`/dashboard?date=${reservation.reservation_date}`);
                 setReservation(blankState)
             } catch (error) {
-                console.log(error)
+                setErrors(error)
             }
         }
     }

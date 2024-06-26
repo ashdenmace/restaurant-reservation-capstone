@@ -12,7 +12,6 @@ function SeatReservation() {
     const [reservation, setReservation] = useState({});
     const [error, setError] = useState(null);
 
-    console.log(reservation_id)
     
     useEffect(() => {
         listTables().then(setTables).catch(setError);

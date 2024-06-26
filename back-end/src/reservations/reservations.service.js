@@ -25,7 +25,6 @@ function update(updatedReservation) {
 }
 
 function search(mobile_number) {
-    console.log(typeof mobile_number)
     return knex("reservations")
       .whereRaw(
         "translate(mobile_number, '() -', '') like ?",

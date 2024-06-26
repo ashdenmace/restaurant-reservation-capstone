@@ -44,7 +44,6 @@ async function list(req, res) {
 
   } else if (req.query.mobile_number){
     const mobile_number = req.query.mobile_number
-    console.log(mobile_number)
     const data = await service.search(mobile_number);
     res.json({data})
   }
@@ -158,7 +157,6 @@ function validTime(req, res, next) {
 
 function statusIsBooked(req, res, next) {
   const reservation = req.body.data
-  console.log(reservation)
   if ((reservation.status) && reservation.status !== "booked") {
     return next({status: 400, message: "status cannot be finished or seated"})
   }
@@ -197,7 +195,6 @@ async function updateStatus(req, res, next) {
 async function update(req, res, next) {
   const {reservation_id} = res.locals.reservation;
   const updatedReservation = {...req.body.data, reservation_id}
-  console.log(updatedReservation)
   
   const data = await service.update(updatedReservation)
   res.status(200).json({data})
