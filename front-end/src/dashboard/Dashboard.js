@@ -86,7 +86,7 @@ function Dashboard({ date }) {
      
 
       <div className="row">
-        <div className="col">
+        <div className="col reservations-col">
           <div className="d-md-flex mb-3">
             <h3 className="mb-0">Reservations for {queryDate}</h3>
           </div>
@@ -98,7 +98,7 @@ function Dashboard({ date }) {
             )}
           
         </div>
-        <div className="col">
+        <div className="col tables-col">
           <h3>Tables</h3>
           <ErrorAlert error={tablesError} />
          

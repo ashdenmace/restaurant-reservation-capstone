@@ -7,3 +7,15 @@
     background-color: rgb(206, 0, 0);
     border: rgb(56, 2, 2);
 }
+
+/* Dashboard.css */
+
+.reservations-col, .tables-col {
+    min-width: 300px; /* Set a minimum width for both columns */
+  }
+  
+  @media (max-width: 1002px) {
+    .reservations-col, .tables-col {
+      min-width: 100%; /* Adjust min-width for smaller screens */
+    }
+  }
