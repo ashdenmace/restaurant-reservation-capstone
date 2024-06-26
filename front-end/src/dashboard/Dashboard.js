@@ -73,6 +73,19 @@ function Dashboard({ date }) {
     return () => abortController.abort();
   }
 
+  function formatDateString(date) {
+    // Split the input date into year, month, and day
+    const split = date.split("-");
+    const year = split[0];
+    const month = split[1];
+    const day = split[2];
+    
+    // Return the date in MM-DD-YYYY format
+    return `${month}-${day}-${year}`;
+}
+
+  const newFormat = formatDateString(queryDate)
+
   return (
     <main>
       <div className="dashboard-header my-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
@@ -88,7 +101,7 @@ function Dashboard({ date }) {
       <div className="row">
         <div className="col reservations-col">
           <div className="d-md-flex mb-3">
-            <h3 className="mb-0">Reservations for {queryDate}</h3>
+            <h3 className="mb-0">Reservations for {newFormat}</h3>
           </div>
           <ErrorAlert error={reservationsError} />
           {reservations.length ? 

@@ -57,7 +57,7 @@ function ReservationCard ({reservation, refreshReservations}) {
                             <button className="btn btn-danger mb-2" onClick={cancelResHandler} data-reservation-id-cancel={reservation.reservation_id}>Cancel</button>
                             <Link to={`/reservations/${reservation.reservation_id}/edit`} className="btn btn-secondary mb-2">Edit</Link>
                                 {reservation.status === "seated" ? null :
-                            <Link className="btn btn-primary mb-2" to={`/reservations/${reservation.reservation_id}/seat`}>Seat</Link>}
+                            <Link className="btn btn-warning mb-2" to={`/reservations/${reservation.reservation_id}/seat`}>Seat</Link>}
                         </div>
                     </ul>
             </div>

@@ -10,12 +10,14 @@
 
 /* Dashboard.css */
 
+
+/* min for both columns */
 .reservations-col, .tables-col {
-    min-width: 300px; /* Set a minimum width for both columns */
+    min-width: 300px; 
   }
-  
+  /* smaller screens */
   @media (max-width: 1002px) {
     .reservations-col, .tables-col {
-      min-width: 100%; /* Adjust min-width for smaller screens */
+      min-width: 100%; 
     }
   }

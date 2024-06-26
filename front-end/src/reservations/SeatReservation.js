@@ -52,10 +52,10 @@ function SeatReservation() {
 
     return (
         <>
-            <h2>Seating for reservation {reservation.reservation_id} for party of {reservation.people}</h2>
+            <h2 className="my-4 formH">Seat {reservation.first_name} {reservation.last_name} Party of {reservation.people}</h2>
             <ErrorAlert error={error} />
             <form onSubmit={submitHandler}>
-                <select className="form-select" name="table_id" onChange={changeHandler} value={selectedTableId}>
+                <select className="form-select form-select-lg mb-3 d-flex" name="table_id" onChange={changeHandler} value={selectedTableId}>
                     <option value="">- Please choose a table -</option>
                     {tables.map((table) => (
                         <option value={table.table_id} key={table.table_id}>
@@ -64,10 +64,10 @@ function SeatReservation() {
                     ))}
                 </select>
                 <div>
-                    <button type="submit">Submit</button>
-                    <button type="button" onClick={() => history.push(`/dashboard`)}>
+                    <button className="btn btn-warning"type="button" onClick={() => history.push(`/dashboard`)}>
                         Cancel
                     </button>
+                    <button  className="btn btn-danger"type="submit">Submit</button>
                 </div>
             </form>
         </>
