@@ -34,7 +34,7 @@ function Search() {
                 <h1 className="my-4 search search-title formH">Search by Mobile Number</h1>
                 <ErrorAlert error={errors}/>
             </div>
-            <div>
+            <div className="my-4">
                 <form onSubmit={(submitHandler)}>
                     <div className="form-group">
                         <label className="form-label">Mobile Number</label>
@@ -50,7 +50,7 @@ function Search() {
                 </form>
             </div>
         
-            {clicked && (reservations.length ? <ReservationList reservations={reservations} /> : <h4>No reservations found</h4>)}
+            {clicked && (reservations.length ? <ReservationList reservations={reservations} /> : <h4 className="formH my-4">No reservations found</h4>)}
             
             
 

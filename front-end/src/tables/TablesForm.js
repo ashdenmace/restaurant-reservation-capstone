@@ -53,10 +53,6 @@ function TablesForm() {
         }
         return () => abortController.abort();
     }
-
-    
-
-    console.log(table)
     
     return (
         <div>
@@ -74,7 +70,7 @@ function TablesForm() {
                 </div>
                 <div>
                     <button className="btn btn-danger" onClick={() => history.goBack()}>Cancel</button>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary mx-2">Submit</button>
                 </div> 
             
         </form>

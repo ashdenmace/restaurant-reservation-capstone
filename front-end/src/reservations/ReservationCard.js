@@ -1,9 +1,10 @@
 import React from "react"
 import {Link} from "react-router-dom"
 import { updateReservationStatus } from "../utils/api";
+import { formatAsTime } from "../utils/date-time";
 
 function ReservationCard ({reservation, refreshReservations}) {
-
+    console.log(formatAsTime(reservation.reservation_time))
     function cancelResHandler (event) {
         event.preventDefault();
         const confirm = window.confirm("Do you want to cancel this reservation? This cannot be undone.")
@@ -14,6 +15,17 @@ function ReservationCard ({reservation, refreshReservations}) {
         }
 
     }
+    const cleanTime = formatAsTime(reservation.reservation_time)
+    
+    function convertTo12HourFormat(cleanTime) {
+        let [hours, minutes] = cleanTime.split(':').map(Number);
+      
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12; // Convert hour to 12-hour format and handle 00:00 case
+        return `${hours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+      }
+    const formattedTime = convertTo12HourFormat(cleanTime);
+    
 
     function colorStatus() {
         if(reservation.status === "booked") {
@@ -38,7 +50,7 @@ function ReservationCard ({reservation, refreshReservations}) {
                     <span className={`badge badge-${colorStatus()}`} data-reservation-id-status={reservation.reservation_id} >{reservation.status}</span>
                     </div>
                     <ul className="list-group">
-                        <li className="list-group-item"> When: {reservation.reservation_time}</li>
+                        <li className="list-group-item"> When: {formattedTime}</li>
                         <li className="list-group-item"> Mobile Number: {reservation.mobile_number} </li>
                         <li className="list-group-item">Party Size: {reservation.people}</li>
                         <li className="list-group-item">Reservation ID: {reservation.reservation_id}</li>
