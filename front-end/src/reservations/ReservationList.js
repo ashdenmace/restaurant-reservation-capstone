@@ -1,12 +1,12 @@
 import ReservationCard from "../reservations/ReservationCard";
 
 
-function ReservationList({reservations}) {
+function ReservationList({reservations, refreshReservations}) {
     return (
         <>  
             {reservations.length ? (
             reservations.map((reservation) => (
-                <ReservationCard key={reservation.reservation_id} reservation={reservation} />
+                <ReservationCard key={reservation.reservation_id} reservation={reservation} refreshReservations={refreshReservations} />
             ))
             ) : null}
         </>

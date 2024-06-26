@@ -1,7 +1,20 @@
 import React from "react"
 import {Link} from "react-router-dom"
+import { updateReservationStatus } from "../utils/api";
 
-function ReservationCard ({reservation}) {
+function ReservationCard ({reservation, cancelResHandler, refreshReservations}) {
+
+    function cancelResHandler (event) {
+        event.preventDefault();
+        const confirm = window.confirm("Do you want to cancel this reservation? This cannot be undone.")
+
+        if(confirm){
+            updateReservationStatus(reservation.reservation_id, "cancelled")
+            .then(() => refreshReservations())
+        }
+
+    }
+
     return (
         <>
             <div className="row">
@@ -17,6 +30,7 @@ function ReservationCard ({reservation}) {
                                 <li className="list-group-item">Party Size: {reservation.people}</li>
                                 <li className="list-group-item">Reservation ID: {reservation.reservation_id}</li>
                                 <div className="list-group-item d-flex justify-content-between align-items-center">
+                                    <button className="btn btn-danger" onClick={cancelResHandler} data-reservation-id-cancel={reservation.reservation_id}>Cancel</button>
                                     <a href={`/reservations/${reservation.reservation_id}/edit`} className="btn btn-secondary">Edit</a>
                                         {reservation.status === "seated" ? null :
                                     <a className="btn btn-primary" href={`/reservations/${reservation.reservation_id}/seat`}>Seat</a>}

@@ -39,6 +39,10 @@ function Dashboard({ date }) {
       .catch(setTablesError);
     return () => abortController.abort();
   }
+  
+  function refreshReservations() {
+    loadDashboard(queryDate); // Reload the reservations list
+  }
 
   function previousHandler(event) {
     event.preventDefault();
@@ -87,7 +91,7 @@ function Dashboard({ date }) {
           <h3>Reservations</h3>
           <ErrorAlert error={reservationsError} />
           {reservations.length ? 
-            <ReservationsList reservations={reservations} />
+            <ReservationsList reservations={reservations} refreshReservations={refreshReservations} />
           : (
             <h1>No reservations for {queryDate}</h1>
             )}
