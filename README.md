@@ -69,7 +69,7 @@ Cancel button will return the user to the previous page.
 ## Seat a reservation 
 The seating page lets the user choose a table to seat a specific reservation at. It features a drop down menu with a list of options (All tables that are not occupied). Validation will ensure that the party size of reservation does not exceed the table capacity selected before seating the table.
 
-![SeatReservation](images/seat.png)
+![SeatReservation](images/seatreservation.png)
 
 ## API Documentation
 The backend API for this restaurant reservation system provides several endpoints to manage reservations and tables. For reservations, you can perform operations such as listing all reservations sorted by time (GET /reservations), creating a new reservation (POST /reservations), updating a reservation by ID (PUT /reservations/:reservation_id), and updating its status (PUT /reservations/:reservation_id/status). Additionally, you can retrieve reservations by mobile number (GET /reservations?mobile_number=XXXXXXXXXX) or date (GET /reservations?date=XXXX-XX-XX), both sorted chronologically.
