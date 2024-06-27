@@ -25,8 +25,8 @@ function TablesForm() {
 
     const validateTable = (table) => {
         const errors = []
-        if (table.table_name.length <= 2) {
-            errors.push("Table name must be longer than 2 characters")
+        if (table.table_name.length < 2) {
+            errors.push("Table name must be longer than one character")
         }
         if (isNaN(table.capacity)) {
             errors.push("Capacity must be a number")
@@ -44,7 +44,6 @@ function TablesForm() {
             try{
                 await createTable(table, abortController.signal)
                 history.push("/dashboard")
-                //setTable(blankForm)
             }catch (error) {
                 setErrors(error)
             }
