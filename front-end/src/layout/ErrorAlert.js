@@ -13,10 +13,12 @@ function ErrorAlert({ error }) {
 
   const errors = Array.isArray(error) ? error : [error.message];
 
+  let key = 1
+
   return (
     <div className="alert alert-danger m-2">
-      {errors.map((err, index) => (
-        <div key={index}>Error: {err}</div>
+      {errors.map((err) => (
+        <div key={key++}>Error: {err}</div>
       ))}
     </div>
   );
