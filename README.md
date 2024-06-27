@@ -2,6 +2,10 @@
 
 This is my final capstone project for Chegg Skills (formerly known as Thinkful)
 
+Deployed Links:
+- [Front End](https://restaurant-reservation-capstone-jxpi.onrender.com/dashboard)
+- [Back End](https://restaurant-reservation-backend-4468.onrender.com/reservations)
+
 ## Summary
 
 This is a full-stack app that is used by employees at a restaurant so that they can manage reservations. It is fully responsive and should look clean and nice on mobile, tablet, and desktop. During this project I was tasked at implementing 8 user stories, managing version control with git, making sure that each user story works before moving to the next.
@@ -10,9 +14,6 @@ Scenario from project description:
 > You have been hired as a full stack developer at _Periodic Tables_, a startup that is creating a reservation system for fine dining restaurants.
 > The software is used only by restaurant personnel when a customer calls to request a reservation.
 > At this point, the customers will not access the system online.
-
-
-Deployed Project
 
 ## Technology Used
 Javascript, React, Node.js, Express.js, Knex.js, PostreSQL (ElephantSQL) CSS, Bootstrap CSS

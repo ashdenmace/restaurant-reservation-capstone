@@ -107,7 +107,7 @@ function Dashboard({ date }) {
           {reservations.length ? 
             <ReservationsList reservations={reservations} refreshReservations={refreshReservations} />
           : (
-            <h1>No reservations for {queryDate}</h1>
+            <h1>No reservations for {newFormat}</h1>
             )}
           
         </div>
