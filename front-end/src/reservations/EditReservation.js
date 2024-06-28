@@ -40,6 +40,7 @@ function EditReservation () {
         if (validationErrors.length) {
            setError(validationErrors)
         } else {
+            reservation["people"] = Number(reservation.people);
             updateReservation(reservation_id, reservation, abortController.signal)
             .then(() => history.push(`/dashboard?date=${reservation.reservation_date}`))
             .catch(setError)
@@ -53,9 +54,22 @@ function EditReservation () {
 
     return (
         <>  
-            <h4 className="my-4 formH">Edit reservation #{reservation_id}</h4>
-            <ErrorAlert error= {error}/>
-            <ReservationForm reservation={reservation} changeHandler={changeHandler} submitHandler={submitHandler}/>
+            {reservation.status !== "booked" ? 
+            <>
+                <h2 className="formH mt-4">Attention!</h2>
+                <h4 className="formH my-4">Only reservations with a "booked" status can be edited</h4> 
+                <button className="btn btn-lg btn-danger" onClick={() => history.goBack()}>Go back</button>
+            </>
+            : 
+            <>
+                <h4 className="my-4 formH">Edit reservation #{reservation_id}</h4>
+                <ErrorAlert error= {error}/>
+                <ReservationForm reservation={reservation} changeHandler={changeHandler} submitHandler={submitHandler}/>
+            </>
+  
+
+            }
+          
         </>
         
     )

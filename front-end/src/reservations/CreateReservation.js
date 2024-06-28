@@ -30,8 +30,7 @@ function CreateReservation() {
     function changeHandler(event) {
         const { name, value } = event.target;
         setReservation((prevReservation) => {
-            const updatedValue = name === "people" ? Number(value) : value;
-            const updatedReservation = { ...prevReservation, [name]: updatedValue };
+            const updatedReservation = { ...prevReservation, [name]: value };
             return updatedReservation;
         });
     }
@@ -46,6 +45,7 @@ function CreateReservation() {
             setErrors(validationErrors)
         } else {
             try{
+                reservation["people"] = Number(reservation.people)
                 await createReservation(reservation, abortController.signal)
                 history.push(`/dashboard?date=${reservation.reservation_date}`);
                 setReservation(blankState)

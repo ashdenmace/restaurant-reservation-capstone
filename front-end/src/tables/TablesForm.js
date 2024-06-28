@@ -17,20 +17,18 @@ function TablesForm() {
     function changeHandler(event) {
         const { name, value } = event.target;
         setTable((prevTable) => {
-            const updatedValue = name === "capacity" ? Number(value) : value;
-            const updatedTable = { ...prevTable, [name]: updatedValue };
+            const updatedTable = { ...prevTable, [name]: value };
             return updatedTable;
         });
     }
+    console.log(table)
 
     const validateTable = (table) => {
         const errors = []
         if (table.table_name.length < 2) {
             errors.push("Table name must be longer than one character")
         }
-        if (isNaN(table.capacity)) {
-            errors.push("Capacity must be a number")
-        }
+        
         return errors
     }
 
@@ -42,6 +40,8 @@ function TablesForm() {
             setErrors(validationErrors)
         } else {
             try{
+                table["capacity"] = Number(table.capacity)
+                console.log(table)
                 await createTable(table, abortController.signal)
                 history.push("/dashboard")
             }catch (error) {
@@ -64,7 +64,7 @@ function TablesForm() {
 
                 <div className="form-group">
                     <label className="form-label">Capacity</label>
-                    <input className="form-control" id="capacity" name="capacity" value={table.capacity} onChange={changeHandler}></input>
+                    <input className="form-control" id="capacity" name="capacity" type="number" value={table.capacity} onChange={changeHandler}></input>
                 </div>
                 <div>
                     <button className="btn btn-danger" onClick={() => history.goBack()}>Cancel</button>
