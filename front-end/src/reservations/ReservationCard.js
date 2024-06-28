@@ -1,9 +1,11 @@
 import React from "react"
-import {Link} from "react-router-dom"
+import {Link, useLocation} from "react-router-dom"
 import { updateReservationStatus } from "../utils/api";
 import { formatAsTime } from "../utils/date-time";
 
 function ReservationCard ({reservation, refreshReservations}) {
+    const location = useLocation();
+
     function cancelResHandler (event) {
         event.preventDefault();
         const confirm = window.confirm("Do you want to cancel this reservation? This cannot be undone.")
@@ -41,6 +43,17 @@ function ReservationCard ({reservation, refreshReservations}) {
         }
     }
 
+    function formatDateString(date) {
+        const split = date.split("-");
+        const year = split[0];
+        const month = split[1];
+        const day = split[2];
+  
+        return `${month}-${day}-${year}`;
+    }
+
+    const formattedDate = formatDateString(reservation.reservation_date)
+
     return (
         <>
             <div className="card my-2">
@@ -49,7 +62,8 @@ function ReservationCard ({reservation, refreshReservations}) {
                     <span className={`badge badge-${colorStatus()}`} data-reservation-id-status={reservation.reservation_id} >{reservation.status}</span>
                     </div>
                     <ul className="list-group">
-                        <li className="list-group-item"> When: {formattedTime}</li>
+                        {location.pathname === "/search" ? <li className="list-group-item">Date: {formattedDate}</li> : null}
+                        <li className="list-group-item"> When: {formattedTime} </li>
                         <li className="list-group-item"> Mobile Number: {reservation.mobile_number} </li>
                         <li className="list-group-item">Party Size: {reservation.people}</li>
                         <li className="list-group-item">Reservation ID: {reservation.reservation_id}</li>
